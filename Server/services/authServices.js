@@ -9,8 +9,8 @@ export default class authServices {
             let result = await pool.request()
                 .input('pUser', sql.VarChar, input.user)
                 .input('pPass', sql.VarChar, input.pass)
-                .query('SELECT * FROM Users WHERE pPass == Users.password AND pUser == Users.username');
-            returnEntity = result.recordsets[0][0];
+                .query('SELECT * FROM Users WHERE @pPass = Users.password AND @pUser = Users.username');
+            r = result.recordsets[0][0];
         }catch(error) {
             console.log(error);
         }
