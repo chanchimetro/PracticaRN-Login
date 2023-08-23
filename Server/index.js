@@ -17,8 +17,8 @@ app.post('/login', async (req, res) => {
     console.log(req.body);
     try {
         let r = await AuthServices.login(req.body);
-        
-        res.status(200).json(r ? {message: 'Login executed! Succesful'} : {message: 'Login executed! Wrong pass or user!'});
+        console.log(r ? 'Login executed! Successful' : 'Login executed! Wrong pass or user!')
+        res.status(200).json(r ? {message: 'Login executed! Successful'} : {message: 'Login executed! Wrong pass or user!'});
     } catch (error) {
         console.error(error);
         res.status(500).json({error:  'Login failed!'});

@@ -6,23 +6,27 @@ const Separator = () => (
   <View style={styles.separator}/>
 );
 
-const login = (user, pass) => {
+const login = async (user, pass) => {
+  let r;
   axios.post('http://localhost:3000/login', {
     user: user,
     pass: pass
 })
   .then(function (response) {
-    console.log(response);
+    console.log(response.data.message);
+    r = response.data.message; 
   })
   .catch(function (error) {
     console.log(error);
   });
+  return r;
 }
 
 export default function App() {
 
   const [userText, onChangeUserText] = useState("");
   const [passText, onChangePassText] = useState("");
+  const [alertText, setAlertText] = useState([""]);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -38,13 +42,13 @@ export default function App() {
           onChangeText = {onChangePassText}
           value = {passText}
         />
-        {/*  <Text>Contador: <Text style={styles.counter}>ok</Text></Text>*/}
         <Button
           style = {styles.button}
           title = "Login"
-          onPress = {() => login(userText, passText)}
-        />
+          onPress = {async () => setAlertText(await login(userText, passText))}
+          />
         <Separator/>
+          <Text>{alertText}</Text>
         <StatusBar style="auto" />
     </SafeAreaView>
   );
