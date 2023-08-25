@@ -11,7 +11,7 @@
    ```
    DB_USER = "user"
    DB_PASSWORD = "user"
-   DB_SERVER = "DESKTOP-BS3AF2L\SQLEXPRESS"
+   DB_SERVER = [Nombre de tu server]
    DB_DATABASE = "loginRN"
    ```
 9.  
