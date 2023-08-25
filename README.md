@@ -11,7 +11,9 @@
    ```
    DB_USER = "user"
    DB_PASSWORD = "user"
-   DB_SERVER = [Nombre de tu server]
+   DB_SERVER = [ServerName]
    DB_DATABASE = "loginRN"
    ```
-9.  
+8. Ejecutar el server (`..\PracticaRN-Login\Server`) con `npm run start`
+9. Ejecutar el cliente (`..\PracticaRN-Login\Client`) con `expo start`
+10. Listo!
