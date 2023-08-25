@@ -8,10 +8,11 @@
 5. Ejecutar la Query de SQL `..\PracticaRN-Login\Server\DBsetup.sql` en Microsoft SQL Server Management Studio
 6. Ejecutar la Query de SQL `..\PracticaRN-Login\Server\DBuserQuery.sql` en Microsoft SQL Server Management Studio
 7. Crear un archivo `.env` en `..\PracticaRN-Login\Server\` con el siguiente formato:
-   `
-DB_USER = "user"
-DB_PASSWORD = "user"
-DB_SERVER = "DESKTOP-BS3AF2L\SQLEXPRESS"
-DB_DATABASE = "loginRN"
-   `
+   ```
+{
+  "firstName": "John",
+  "lastName": "Smith",
+  "age": 25
+}
+``` 
 9.  
