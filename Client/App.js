@@ -48,6 +48,11 @@ function LoginScreen({ navigation }) {
 
   return (
     <SafeAreaView style={styles.container}>
+      <Text
+        style={styles.title}
+      >
+        Login
+      </Text>
       <TextInput
         style={styles.input}
         placeholder='Username'
@@ -85,6 +90,11 @@ function RegisterScreen({ navigation }) {
 
   return (
     <SafeAreaView style={styles.container}>
+      <Text
+        style={styles.title}
+      >
+        Register
+      </Text>
       <TextInput
         style={styles.input}
         placeholder='Username'
@@ -130,11 +140,11 @@ export default function App() {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 30,
     padding: 15,
     flex: 1,
     backgroundColor: '#fff',
-    marginHorizontal: 30,
+    margin: 30,
+    borderRadius: 4,
   },
   input: {
     marginVertical: 12,
@@ -151,5 +161,10 @@ const styles = StyleSheet.create({
     color: '#616161',
     marginTop: 8,
     textDecorationLine: 'underline'
+  },
+  title: {
+    marginTop: 8,
+    fontWeight: 'bold',
+    fontSize: 20
   }
 });
