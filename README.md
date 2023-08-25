@@ -8,11 +8,9 @@
 5. Ejecutar la Query de SQL `..\PracticaRN-Login\Server\DBsetup.sql` en Microsoft SQL Server Management Studio
 6. Ejecutar la Query de SQL `..\PracticaRN-Login\Server\DBuserQuery.sql` en Microsoft SQL Server Management Studio
 7. Crear un archivo `.env` en `..\PracticaRN-Login\Server\` con el siguiente formato:
-   ```
-{
+   ```{
   "firstName": "John",
   "lastName": "Smith",
   "age": 25
-}
-``` 
+}``` 
 9.  
