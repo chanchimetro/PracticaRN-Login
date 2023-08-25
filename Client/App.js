@@ -2,55 +2,129 @@ import { StatusBar } from 'expo-status-bar';
 import { useState } from 'react';
 import axios from 'axios';
 import { StyleSheet, Text, View, SafeAreaView, TextInput, Button } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
 const Separator = () => (
-  <View style={styles.separator}/>
+  <View style={styles.separator} />
 );
 
 const login = async (user, pass) => {
   let r;
-  axios.post('http://localhost:3000/login', {
+  await axios.post('http://localhost:3001/login', {
     user: user,
     pass: pass
-})
-  .then(function (response) {
-    console.log(response.data.message);
-    r = response.data.message; 
   })
-  .catch(function (error) {
-    console.log(error);
-  });
+    .then(function (response) {
+      console.log(response.data.message);
+      r = response.data.message;
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
   return r;
 }
 
-export default function App() {
+const register = async (user, pass) => {
+  let r;
+  await axios.post('http://localhost:3001/register', {
+    user: user,
+    pass: pass
+  })
+    .then(function (response) {
+      console.log(response.data.message);
+      r = response.data.message;
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  return r;
+}
 
+function LoginScreen({ navigation }) {
   const [userText, onChangeUserText] = useState("");
   const [passText, onChangePassText] = useState("");
   const [alertText, setAlertText] = useState([""]);
 
   return (
     <SafeAreaView style={styles.container}>
-        <TextInput
-          style = {styles.input}
-          placeholder = 'ingrese texto'
-          onChangeText = {onChangeUserText}
-          value = {userText}
-        />
-        <TextInput
-          style = {styles.input}
-          placeholder = 'ingrese texto'
-          onChangeText = {onChangePassText}
-          value = {passText}
-        />
-        <Button
-          style = {styles.button}
-          title = "Login"
-          onPress = {async () => setAlertText(await login(userText, passText))}
-          />
-        <Separator/>
-          <Text>{alertText}</Text>
-        <StatusBar style="auto" />
+      <TextInput
+        style={styles.input}
+        placeholder='Username'
+        onChangeText={onChangeUserText}
+        value={userText}
+      />
+      <TextInput
+        style={styles.input}
+        placeholder='Password'
+        onChangeText={onChangePassText}
+        value={passText}
+      />
+      <Button
+        style={styles.button}
+        title="Login"
+        onPress={async () => setAlertText(await login(userText, passText))}
+      />
+      <Text
+        style={styles.link}
+        onPress={() => navigation.navigate('Register')}
+      >
+        No tengo cuenta
+      </Text>
+      <Separator />
+      <Text>{alertText}</Text>
+      <StatusBar style="auto" />
     </SafeAreaView>
+  );
+}
+
+function RegisterScreen({ navigation }) {
+  const [userText, onChangeUserText] = useState("");
+  const [passText, onChangePassText] = useState("");
+  const [alertText, setAlertText] = useState([""]);
+
+  return (
+    <SafeAreaView style={styles.container}>
+      <TextInput
+        style={styles.input}
+        placeholder='Username'
+        onChangeText={onChangeUserText}
+        value={userText}
+      />
+      <TextInput
+        style={styles.input}
+        placeholder='Password'
+        onChangeText={onChangePassText}
+        value={passText}
+      />
+      <Button
+        style={styles.button}
+        title="Login"
+        onPress={async () => setAlertText(await register(userText, passText))}
+      />
+      <Text
+        style={styles.link}
+        onPress={() => navigation.navigate('Login')}
+      >
+        Ya tengo cuenta
+      </Text>
+      <Separator />
+      <Text>{alertText}</Text>
+      <StatusBar style="auto" />
+    </SafeAreaView>
+  );
+}
+
+const Stack = createNativeStackNavigator();
+
+export default function App() {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Login">
+        <Stack.Screen name="Login" component={LoginScreen} />
+        <Stack.Screen name="Register" component={RegisterScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 
@@ -73,7 +147,9 @@ const styles = StyleSheet.create({
     borderBottomColor: '#737373',
     borderBottomWidth: StyleSheet.hairlineWidth,
   },
-  counter: {
-    color: '#EE4B2B'
+  link: {
+    color: '#616161',
+    marginTop: 8,
+    textDecorationLine: 'underline'
   }
 });
