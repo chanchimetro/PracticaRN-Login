@@ -18,10 +18,10 @@ app.post('/login', async (req, res) => {
     try {
         let r = await AuthServices.login(req.body);
         console.log(r ? 'Logged in!' : 'Wrong pass or user!')
-        res.status(200).json(r ? {message: 'Login executed! Successful'} : {message: 'Login executed! Wrong pass or user!'});
+        r ? res.status(200).json({message: 'Login executed! Successful'}) : res.status(401).json({message: 'Wrong username or password'});
     } catch (error) {
         console.error(error);
-        res.status(500).json({error:  'Login failed!'});
+        res.status(500).json({error:  'Login failed! :('});
     }
 })
 
@@ -32,7 +32,7 @@ app.post('/register', async (req, res) => {
     try {
         let r = await AuthServices.register(req.body);
         console.log(r ? 'Registered!' : 'Username already taken!')
-        res.status(200).json(r ? {message: 'Registered!'} : {message: 'Username already taken!'});
+        r ? res.status(200).json({message: 'Account registered successfully!'}) : res.status(204).json({message: 'Username already taken!'});
     } catch (error) {
         console.error(error);
         res.status(500).json({error:  'Register failed!'});

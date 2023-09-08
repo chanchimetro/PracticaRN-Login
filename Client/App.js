@@ -9,20 +9,28 @@ const Separator = () => (
   <View style={styles.separator} />
 );
 
-const login = async (user, pass) => {
+const login = async (user, pass, setAlertText) => {
   let r;
-  await axios.post('http://localhost:3001/login', {
-    user: user,
-    pass: pass
-  })
-    .then(function (response) {
-      console.log(response.data.message);
-      r = response.data.message;
+
+  try {
+    await axios.post('http://localhost:3001/login', {
+      user: user,
+      pass: pass
     })
-    .catch(function (error) {
-      console.log(error);
-    });
-  return r;
+      .then(function (response) {
+        r = response;
+        setAlertText(r.response.data.message);
+        console.log("HOME");
+        setTimeout(
+          navigation.navigate('Home', {
+            user: user,
+            pass: pass
+          }), 10000
+        );
+      })
+  } catch (error) {
+    console.log(error);
+  };
 }
 
 const register = async (user, pass) => {
@@ -68,7 +76,7 @@ function LoginScreen({ navigation }) {
       <Button
         style={styles.button}
         title="Login"
-        onPress={async () => setAlertText(await login(userText, passText))}
+        onPress={() => login(userText, passText, setAlertText)}
       />
       <Text
         style={styles.link}
@@ -125,6 +133,20 @@ function RegisterScreen({ navigation }) {
   );
 }
 
+function HomeScreen({ route, navigation }) {
+  const { user, pass } = route.params;
+
+  return (
+    <SafeAreaView style={styles.container}>
+      <Text
+        style={styles.title}
+      >
+        feff
+      </Text>
+    </SafeAreaView>
+  );
+}
+
 const Stack = createNativeStackNavigator();
 
 export default function App() {
@@ -133,6 +155,7 @@ export default function App() {
       <Stack.Navigator initialRouteName="Login">
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="Register" component={RegisterScreen} />
+        <Stack.Screen name="HomeScreen" component={HomeScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
