@@ -20,10 +20,10 @@ const login = async (user, pass) => {
       r = response.data.message;
     })
     .catch(function (error) {
-      r =  error.response.data.message;
+      r = error.response.data.message;
       console.log(error);
     });
-    return r;
+  return r;
 }
 
 const register = async (user, pass) => {
@@ -33,13 +33,36 @@ const register = async (user, pass) => {
     pass: pass
   })
     .then(function (response) {
-      console.log(response.data.message);
+      console.log(response);
       r = response.data.message;
     })
     .catch(function (error) {
+      r = error.response.data.message;
       console.log(error);
     });
   return r;
+}
+
+function HomeScreen({ navigation }) {
+  return (
+    <SafeAreaView style={styles.container}>
+      <View
+        style={styles.centeredCont}>
+        <Button
+          style={styles.button}
+          title="Login"
+          onPress={() => navigation.navigate('Login')}
+        ></Button>
+        <Separator />
+        <Button
+          style={styles.button}
+          title="Register"
+          onPress={() => navigation.navigate('Register')}
+        ></Button>
+      </View>
+      <StatusBar style="auto" />
+    </SafeAreaView>
+  );
 }
 
 function LoginScreen({ navigation }) {
@@ -131,7 +154,8 @@ const Stack = createNativeStackNavigator();
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Login">
+      <Stack.Navigator initialRouteName="Home">
+        <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="Register" component={RegisterScreen} />
       </Stack.Navigator>
@@ -147,6 +171,13 @@ const styles = StyleSheet.create({
     margin: 30,
     borderRadius: 4,
   },
+  centeredCont: {
+    padding: 15,
+    flex: 1,
+    backgroundColor: '#fff',
+    marginTop: 200,
+    borderRadius: 4,
+  },
   input: {
     borderRadius: 5,
     marginVertical: 12,
@@ -155,7 +186,7 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   separator: {
-    marginVertical: 8,
+    marginVertical: 10,
     borderBottomColor: '#737373',
     borderBottomWidth: StyleSheet.hairlineWidth,
   },

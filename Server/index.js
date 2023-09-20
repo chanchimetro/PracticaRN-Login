@@ -36,9 +36,13 @@ app.post('/register', async (req, res) => {
     try {
         let r = await AuthServices.register(req.body);
         console.log(r ? 'Registered!' : 'Username already taken!')
-        res.status(200).json(r ? {message: 'Registered!'} : {message: 'Username already taken!'});
+        if(r) {
+            res.status(200).json({message: 'Registered successfuly!'});    
+        } else {
+            res.status(400).json({message: 'Username already taken!'});    
+        }
     } catch (error) {
         console.error(error);
-        res.status(500).json({error:  'Register failed!'});
+        res.status(500).json({error:  'Server error! Sorry! :/'});
     }
 })
