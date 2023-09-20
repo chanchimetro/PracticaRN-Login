@@ -17,11 +17,15 @@ app.post('/login', async (req, res) => {
     console.log(req.body);
     try {
         let r = await AuthServices.login(req.body);
-        console.log(r ? 'Logged in!' : 'Wrong pass or user!')
-        res.status(200).json(r ? {message: 'Login executed! Successful'} : {message: 'Login executed! Wrong pass or user!'});
+        console.log(r ? 'Logged in!' : 'Wrong pass or user!');
+        if(r) {
+            res.status(200).json({message: 'Login executed! Successful'});    
+        } else {
+            res.status(403).json({message: 'Wrong credentials!'});    
+        }
     } catch (error) {
         console.error(error);
-        res.status(500).json({error:  'Login failed!'});
+        res.status(500).json({error:  'Server error! Sorry! :/'});
     }
 })
 

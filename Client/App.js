@@ -16,13 +16,14 @@ const login = async (user, pass) => {
     pass: pass
   })
     .then(function (response) {
-      console.log(response.data.message);
+      console.log(response);
       r = response.data.message;
     })
     .catch(function (error) {
+      r =  error.response.data.message;
       console.log(error);
     });
-  return r;
+    return r;
 }
 
 const register = async (user, pass) => {
@@ -109,7 +110,7 @@ function RegisterScreen({ navigation }) {
       />
       <Button
         style={styles.button}
-        title="Login"
+        title="Register"
         onPress={async () => setAlertText(await register(userText, passText))}
       />
       <Text
@@ -147,6 +148,7 @@ const styles = StyleSheet.create({
     borderRadius: 4,
   },
   input: {
+    borderRadius: 5,
     marginVertical: 12,
     height: 40,
     borderWidth: 1,
