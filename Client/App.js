@@ -1,15 +1,16 @@
 import { StatusBar } from 'expo-status-bar';
-import { useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import { StyleSheet, Text, View, SafeAreaView, TextInput, Button } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { userContext } from './contexts/userContext';
 
 const Separator = () => (
   <View style={styles.separator} />
 );
 
-const login = async (user, pass) => {
+const login = async (user, pass, context, navigation) => {
   let r;
   await axios.post('http://localhost:3001/login', {
     user: user,
@@ -17,7 +18,9 @@ const login = async (user, pass) => {
   })
     .then(function (response) {
       console.log(response);
+      context.setUser(response.data.data);
       r = response.data.message;
+      setTimeout(() => navigation.navigate('Home'), 3000);
     })
     .catch(function (error) {
       r = error.response.data.message;
@@ -44,6 +47,19 @@ const register = async (user, pass) => {
 }
 
 function HomeScreen({ navigation }) {
+  const context = useContext(userContext);
+  return (
+    <SafeAreaView style={styles.container}>
+      <View
+        style={styles.centeredCont}>
+          
+      </View>
+      <StatusBar style="auto" />
+    </SafeAreaView>
+  );
+}
+
+function MenuScreen({ navigation }) {
   return (
     <SafeAreaView style={styles.container}>
       <View
@@ -69,6 +85,11 @@ function LoginScreen({ navigation }) {
   const [userText, onChangeUserText] = useState("");
   const [passText, onChangePassText] = useState("");
   const [alertText, setAlertText] = useState([""]);
+  const context = useContext(userContext);
+
+  useEffect(()=>{
+    console.log(context.user);
+  },[context.user])
 
   return (
     <SafeAreaView style={styles.container}>
@@ -92,7 +113,7 @@ function LoginScreen({ navigation }) {
       <Button
         style={styles.button}
         title="Login"
-        onPress={async () => setAlertText(await login(userText, passText))}
+        onPress={async () => setAlertText(await login(userText, passText, context, navigation))}
       />
       <Text
         style={styles.link}
@@ -152,14 +173,18 @@ function RegisterScreen({ navigation }) {
 const Stack = createNativeStackNavigator();
 
 export default function App() {
+  const [user, setUser] = useState({})
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home">
-        <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="Login" component={LoginScreen} />
-        <Stack.Screen name="Register" component={RegisterScreen} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <userContext.Provider value={{user, setUser}}>
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen name="Menu" component={MenuScreen} />
+          <Stack.Screen name="Login" component={LoginScreen} />
+          <Stack.Screen name="Register" component={RegisterScreen} />
+          <Stack.Screen name="Home" component={HomeScreen} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </userContext.Provider>
   );
 }
 
