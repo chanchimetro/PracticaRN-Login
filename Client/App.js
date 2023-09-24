@@ -1,10 +1,11 @@
 import { StatusBar } from 'expo-status-bar';
 import { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
-import { StyleSheet, Text, View, SafeAreaView, TextInput, Button } from 'react-native';
+import { Text, View, SafeAreaView, TextInput, Button } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { userContext } from './contexts/userContext';
+import styles from './stylesheet.js';
 
 const Separator = () => (
   <View style={styles.separator} />
@@ -29,7 +30,7 @@ const login = async (user, pass, context, navigation) => {
   return r;
 }
 
-const register = async (user, pass) => {
+const register = async (user, pass, navigation) => {
   let r;
   await axios.post('http://localhost:3001/register', {
     user: user,
@@ -38,6 +39,28 @@ const register = async (user, pass) => {
     .then(function (response) {
       console.log(response);
       r = response.data.message;
+      setTimeout(() => navigation.navigate('Menu'), 3000);
+    })
+    .catch(function (error) {
+      r = error.response.data.message;
+      console.log(error);
+    });
+  return r;
+}
+
+const editProfile = async (name, surname, email, context, navigation) => {
+  let r;
+  await axios.put('http://localhost:3001/changeProfile', {
+    username: context.user.username,
+    name: name,
+    surname: surname,
+    email: email
+  })
+    .then(function (response) {
+      console.log(response.data);
+      context.setUser(response.data.data);
+      r = response.data.message;
+      setTimeout(() => navigation.navigate('Home'), 2000);
     })
     .catch(function (error) {
       r = error.response.data.message;
@@ -47,12 +70,110 @@ const register = async (user, pass) => {
 }
 
 function HomeScreen({ navigation }) {
+  const [isLoading, setIsLoading] = useState(true);
+  const [completeProfile, setCompleteProfile] = useState(true);
   const context = useContext(userContext);
+
+  useEffect(() => {
+    let val = Object.values(context.user)
+    val.forEach(e => {
+      if (e === null) setCompleteProfile(false);
+    });
+    setIsLoading(false);
+  }, []);
+  return (
+    <SafeAreaView style={styles.container}>
+      <View style={styles.centeredCont}>
+        {
+          isLoading ? <Text>Loading...</Text> : completeProfile ?
+            <>
+              <View
+                style={styles.menuTitle}
+              >
+                <Text
+                  style={styles.title}
+                >
+                  Bienvenido! {context.user.name} {context.user.surname}!
+                </Text>
+              </View>
+              <Separator />
+              <Button
+                style={styles.button}
+                title="Edita tu perfil"
+                onPress={() => navigation.navigate('Profile')}
+              ></Button>
+            </> :
+            <>
+              <View
+                style={styles.menuTitle}
+              >
+                <Text
+                  style={styles.title}
+                >
+                  Bienvenido!
+                </Text>
+              </View>
+              <Separator />
+              <Button
+                style={styles.button}
+                title="Completa tu perfil"
+                onPress={() => navigation.navigate('Profile')}
+              ></Button>
+            </>
+        }
+      </View>
+      <StatusBar style="auto" />
+    </SafeAreaView>
+  );
+}
+
+function ProfileScreen({ navigation }) {
+  const context = useContext(userContext);
+
+  const [alertText, setAlertText] = useState("");
+  const [nameText, onChangeName] = useState(context.user.name);
+  const [surnameText, onChangeSurname] = useState(context.user.surname);
+  const [emailText, onChangeEmail] = useState(context.user.email);
+
   return (
     <SafeAreaView style={styles.container}>
       <View
         style={styles.centeredCont}>
-          
+        <Text
+          style={styles.title}
+        >
+          Editar perfil
+        </Text>
+        <Text><View style={styles.bold}>Username: </View>{context.user.username}</Text>
+        <Separator/>
+        <Text style={styles.bold}>Nombre: </Text>
+        <TextInput
+          style={styles.input}
+          placeholder='Ingresa tu nombre'
+          onChangeText={onChangeName}
+          value={nameText}
+        />
+        <Text style={styles.bold}>Apellido: </Text>
+        <TextInput
+          style={styles.input}
+          placeholder='Ingresa tu apellido'
+          onChangeText={onChangeSurname}
+          value={surnameText}
+        />
+        <Text style={styles.bold}>Email: </Text>
+        <TextInput
+          style={styles.input}
+          placeholder='Ingresa tu email'
+          onChangeText={onChangeEmail}
+          value={emailText}
+        />
+        <Separator />
+        <Button
+          style={styles.button}
+          title="Confirmar"
+          onPress={async () => setAlertText(await editProfile(nameText, surnameText, emailText, context, navigation))}
+        />
+        <Text>{alertText}</Text>
       </View>
       <StatusBar style="auto" />
     </SafeAreaView>
@@ -87,12 +208,12 @@ function LoginScreen({ navigation }) {
   const [alertText, setAlertText] = useState([""]);
   const context = useContext(userContext);
 
-  useEffect(()=>{
+  useEffect(() => {
     console.log(context.user);
-  },[context.user])
+  }, [context.user])
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={styles.centeredCont}>
       <Text
         style={styles.title}
       >
@@ -134,7 +255,7 @@ function RegisterScreen({ navigation }) {
   const [alertText, setAlertText] = useState([""]);
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={styles.centeredCont}>
       <Text
         style={styles.title}
       >
@@ -155,7 +276,7 @@ function RegisterScreen({ navigation }) {
       <Button
         style={styles.button}
         title="Register"
-        onPress={async () => setAlertText(await register(userText, passText))}
+        onPress={async () => setAlertText(await register(userText, passText, navigation))}
       />
       <Text
         style={styles.link}
@@ -175,11 +296,12 @@ const Stack = createNativeStackNavigator();
 export default function App() {
   const [user, setUser] = useState({})
   return (
-    <userContext.Provider value={{user, setUser}}>
+    <userContext.Provider value={{ user, setUser }}>
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen name="Menu" component={MenuScreen} />
           <Stack.Screen name="Login" component={LoginScreen} />
+          <Stack.Screen name="Profile" component={ProfileScreen} />
           <Stack.Screen name="Register" component={RegisterScreen} />
           <Stack.Screen name="Home" component={HomeScreen} />
         </Stack.Navigator>
@@ -187,42 +309,3 @@ export default function App() {
     </userContext.Provider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    padding: 15,
-    flex: 1,
-    backgroundColor: '#fff',
-    margin: 30,
-    borderRadius: 4,
-  },
-  centeredCont: {
-    padding: 15,
-    flex: 1,
-    backgroundColor: '#fff',
-    marginTop: 200,
-    borderRadius: 4,
-  },
-  input: {
-    borderRadius: 5,
-    marginVertical: 12,
-    height: 40,
-    borderWidth: 1,
-    padding: 10,
-  },
-  separator: {
-    marginVertical: 10,
-    borderBottomColor: '#737373',
-    borderBottomWidth: StyleSheet.hairlineWidth,
-  },
-  link: {
-    color: '#616161',
-    marginTop: 8,
-    textDecorationLine: 'underline'
-  },
-  title: {
-    marginTop: 8,
-    fontWeight: 'bold',
-    fontSize: 20
-  }
-});
