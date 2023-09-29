@@ -6,6 +6,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { userContext } from './contexts/userContext';
 import styles from './stylesheet.js';
 import authServices from './scripts.js';
+import HomeScreen from './screens/Home';
 
 const handleLogout = (context, navigation) => {
   context.setUser({});
@@ -15,74 +16,6 @@ const handleLogout = (context, navigation) => {
 const Separator = () => (
   <View style={styles.separator} />
 );
-
-function HomeScreen({ navigation }) {
-  const [isLoading, setIsLoading] = useState(true);
-  const [completeProfile, setCompleteProfile] = useState(true);
-  const context = useContext(userContext);
-
-  useEffect(() => {
-    let val = Object.values(context.user)
-    val.forEach(e => {
-      if (e === null) setCompleteProfile(false);
-    });
-    setIsLoading(false);
-  }, []);
-
-  return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.centeredCont}>
-        {
-          isLoading ? <Text>Loading...</Text> : <> {
-            completeProfile ?
-              <>
-                <View
-                  style={styles.menuTitle}
-                >
-                  <Text
-                    style={styles.title}
-                  >
-                    Bienvenido! {context.user.name} {context.user.surname}!
-                  </Text>
-                </View>
-                <Separator />
-                <Button
-                  style={styles.button}
-                  title="Edita tu perfil"
-                  onPress={() => navigation.navigate('Profile')}
-                ></Button>
-              </> :
-              <>
-                <View
-                  style={styles.menuTitle}
-                >
-                  <Text
-                    style={styles.title}
-                  >
-                    Bienvenido!
-                  </Text>
-                </View>
-                <Separator />
-                <Button
-                  style={styles.button}
-                  title="Completa tu perfil"
-                  onPress={() => navigation.navigate('Profile')}
-                ></Button>
-              </>
-          }
-          <Separator/>
-            <Button
-              style={styles.button}
-              title="Cerrar Sesion"
-              onPress={() => handleLogout(context, navigation)}
-            ></Button>
-          </>
-        }
-      </View>
-      <StatusBar style="auto" />
-    </SafeAreaView>
-  );
-}
 
 function ProfileScreen({ navigation }) {
   const context = useContext(userContext);

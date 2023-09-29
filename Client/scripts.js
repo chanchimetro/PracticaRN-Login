@@ -1,9 +1,11 @@
 import axios from 'axios';
 
+let url = "http://localhost:3001/"
+
 export default class authServices {
     static login = async (user, pass, context, navigation) => {
         let r;
-        await axios.post('http://localhost:3001/login', {
+        await axios.post(url+'login', {
           user: user,
           pass: pass
         })
