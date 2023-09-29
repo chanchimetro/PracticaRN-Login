@@ -2,6 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import { useContext, useEffect, useState } from 'react';
 import { Text, View, SafeAreaView, Button } from 'react-native';
 import { userContext } from '../contexts/userContext.js';
+import Separator from '../Separator.js';
 import styles from '../stylesheet.js';
 
 const handleLogout = (context, navigation) => {
