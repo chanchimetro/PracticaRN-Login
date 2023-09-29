@@ -44,6 +44,9 @@ const styles = StyleSheet.create({
     },
     bold: {
         fontWeight: 'bold'
+    },
+    logoutBtn: {
+        marginTop: 4
     }
 });
 

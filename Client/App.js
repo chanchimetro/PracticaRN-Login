@@ -1,73 +1,20 @@
 import { StatusBar } from 'expo-status-bar';
 import { useContext, useEffect, useState } from 'react';
-import axios from 'axios';
 import { Text, View, SafeAreaView, TextInput, Button } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { userContext } from './contexts/userContext';
 import styles from './stylesheet.js';
+import authServices from './scripts.js';
+
+const handleLogout = (context, navigation) => {
+  context.setUser({});
+  navigation.navigate('Menu');
+}
 
 const Separator = () => (
   <View style={styles.separator} />
 );
-
-const login = async (user, pass, context, navigation) => {
-  let r;
-  await axios.post('http://localhost:3001/login', {
-    user: user,
-    pass: pass
-  })
-    .then(function (response) {
-      console.log(response);
-      context.setUser(response.data.data);
-      r = response.data.message;
-      setTimeout(() => navigation.navigate('Home'), 3000);
-    })
-    .catch(function (error) {
-      r = error.response.data.message;
-      console.log(error);
-    });
-  return r;
-}
-
-const register = async (user, pass, navigation) => {
-  let r;
-  await axios.post('http://localhost:3001/register', {
-    user: user,
-    pass: pass
-  })
-    .then(function (response) {
-      console.log(response);
-      r = response.data.message;
-      setTimeout(() => navigation.navigate('Menu'), 3000);
-    })
-    .catch(function (error) {
-      r = error.response.data.message;
-      console.log(error);
-    });
-  return r;
-}
-
-const editProfile = async (name, surname, email, context, navigation) => {
-  let r;
-  await axios.put('http://localhost:3001/changeProfile', {
-    username: context.user.username,
-    name: name,
-    surname: surname,
-    email: email
-  })
-    .then(function (response) {
-      console.log(response.data);
-      context.setUser(response.data.data);
-      r = response.data.message;
-      setTimeout(() => navigation.navigate('Home'), 2000);
-    })
-    .catch(function (error) {
-      r = error.response.data.message;
-      console.log(error);
-    });
-  return r;
-}
 
 function HomeScreen({ navigation }) {
   const [isLoading, setIsLoading] = useState(true);
@@ -81,45 +28,55 @@ function HomeScreen({ navigation }) {
     });
     setIsLoading(false);
   }, []);
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.centeredCont}>
         {
-          isLoading ? <Text>Loading...</Text> : completeProfile ?
-            <>
-              <View
-                style={styles.menuTitle}
-              >
-                <Text
-                  style={styles.title}
+          isLoading ? <Text>Loading...</Text> : <> {
+            completeProfile ?
+              <>
+                <View
+                  style={styles.menuTitle}
                 >
-                  Bienvenido! {context.user.name} {context.user.surname}!
-                </Text>
-              </View>
-              <Separator />
-              <Button
-                style={styles.button}
-                title="Edita tu perfil"
-                onPress={() => navigation.navigate('Profile')}
-              ></Button>
-            </> :
-            <>
-              <View
-                style={styles.menuTitle}
-              >
-                <Text
-                  style={styles.title}
+                  <Text
+                    style={styles.title}
+                  >
+                    Bienvenido! {context.user.name} {context.user.surname}!
+                  </Text>
+                </View>
+                <Separator />
+                <Button
+                  style={styles.button}
+                  title="Edita tu perfil"
+                  onPress={() => navigation.navigate('Profile')}
+                ></Button>
+              </> :
+              <>
+                <View
+                  style={styles.menuTitle}
                 >
-                  Bienvenido!
-                </Text>
-              </View>
-              <Separator />
-              <Button
-                style={styles.button}
-                title="Completa tu perfil"
-                onPress={() => navigation.navigate('Profile')}
-              ></Button>
-            </>
+                  <Text
+                    style={styles.title}
+                  >
+                    Bienvenido!
+                  </Text>
+                </View>
+                <Separator />
+                <Button
+                  style={styles.button}
+                  title="Completa tu perfil"
+                  onPress={() => navigation.navigate('Profile')}
+                ></Button>
+              </>
+          }
+          <Separator/>
+            <Button
+              style={styles.button}
+              title="Cerrar Sesion"
+              onPress={() => handleLogout(context, navigation)}
+            ></Button>
+          </>
         }
       </View>
       <StatusBar style="auto" />
@@ -145,7 +102,7 @@ function ProfileScreen({ navigation }) {
           Editar perfil
         </Text>
         <Text><View style={styles.bold}>Username: </View>{context.user.username}</Text>
-        <Separator/>
+        <Separator />
         <Text style={styles.bold}>Nombre: </Text>
         <TextInput
           style={styles.input}
@@ -171,7 +128,7 @@ function ProfileScreen({ navigation }) {
         <Button
           style={styles.button}
           title="Confirmar"
-          onPress={async () => setAlertText(await editProfile(nameText, surnameText, emailText, context, navigation))}
+          onPress={async () => setAlertText(await authServices.editProfile(nameText, surnameText, emailText, context, navigation))}
         />
         <Text>{alertText}</Text>
       </View>
@@ -213,38 +170,40 @@ function LoginScreen({ navigation }) {
   }, [context.user])
 
   return (
-    <SafeAreaView style={styles.centeredCont}>
-      <Text
-        style={styles.title}
-      >
-        Login
-      </Text>
-      <TextInput
-        style={styles.input}
-        placeholder='Username'
-        onChangeText={onChangeUserText}
-        value={userText}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder='Password'
-        onChangeText={onChangePassText}
-        value={passText}
-      />
-      <Button
-        style={styles.button}
-        title="Login"
-        onPress={async () => setAlertText(await login(userText, passText, context, navigation))}
-      />
-      <Text
-        style={styles.link}
-        onPress={() => navigation.navigate('Register')}
-      >
-        No tengo cuenta
-      </Text>
-      <Separator />
-      <Text>{alertText}</Text>
-      <StatusBar style="auto" />
+    <SafeAreaView style={styles.container}>
+      <View style={styles.centeredCont}>
+        <Text
+          style={styles.title}
+        >
+          Login
+        </Text>
+        <TextInput
+          style={styles.input}
+          placeholder='Username'
+          onChangeText={onChangeUserText}
+          value={userText}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder='Password'
+          onChangeText={onChangePassText}
+          value={passText}
+        />
+        <Button
+          style={styles.button}
+          title="Login"
+          onPress={async () => setAlertText(await authServices.login(userText, passText, context, navigation))}
+        />
+        <Text
+          style={styles.link}
+          onPress={() => navigation.navigate('Register')}
+        >
+          No tengo cuenta
+        </Text>
+        <Separator />
+        <Text>{alertText}</Text>
+        <StatusBar style="auto" />
+      </View>
     </SafeAreaView>
   );
 }
@@ -255,38 +214,40 @@ function RegisterScreen({ navigation }) {
   const [alertText, setAlertText] = useState([""]);
 
   return (
-    <SafeAreaView style={styles.centeredCont}>
-      <Text
-        style={styles.title}
-      >
-        Register
-      </Text>
-      <TextInput
-        style={styles.input}
-        placeholder='Username'
-        onChangeText={onChangeUserText}
-        value={userText}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder='Password'
-        onChangeText={onChangePassText}
-        value={passText}
-      />
-      <Button
-        style={styles.button}
-        title="Register"
-        onPress={async () => setAlertText(await register(userText, passText, navigation))}
-      />
-      <Text
-        style={styles.link}
-        onPress={() => navigation.navigate('Login')}
-      >
-        Ya tengo cuenta
-      </Text>
-      <Separator />
-      <Text>{alertText}</Text>
-      <StatusBar style="auto" />
+    <SafeAreaView style={styles.container}>
+      <View style={styles.centeredCont}>
+        <Text
+          style={styles.title}
+        >
+          Register
+        </Text>
+        <TextInput
+          style={styles.input}
+          placeholder='Username'
+          onChangeText={onChangeUserText}
+          value={userText}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder='Password'
+          onChangeText={onChangePassText}
+          value={passText}
+        />
+        <Button
+          style={styles.button}
+          title="Register"
+          onPress={async () => setAlertText(await authServices.register(userText, passText, navigation))}
+        />
+        <Text
+          style={styles.link}
+          onPress={() => navigation.navigate('Login')}
+        >
+          Ya tengo cuenta
+        </Text>
+        <Separator />
+        <Text>{alertText}</Text>
+        <StatusBar style="auto" />
+      </View>
     </SafeAreaView>
   );
 }
