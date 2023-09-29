@@ -20,9 +20,9 @@ app.post('/login', async (req, res) => {
 		let r = await AuthServices.login(req.body);
 		console.log(r ? 'Logged in!' : 'Wrong pass or user!');
 		if (r) {
-			res.status(200).json({ message: 'Login executed! Successfull', data: r });
+			res.status(200).json({ message: 'Logueado!', data: r });
 		} else {
-			res.status(403).json({ message: 'Wrong credentials!' });
+			res.status(403).json({ message: 'Credenciales incorrectas!' });
 		}
 	} catch (error) {
 		console.error(error);
@@ -38,9 +38,9 @@ app.post('/register', async (req, res) => {
 		let r = await AuthServices.register(req.body);
 		console.log(r ? 'Registered!' : 'Username already taken!')
 		if (r) {
-			res.status(200).json({ message: 'Registered successfully!' });
+			res.status(200).json({ message: 'Registrado!' });
 		} else {
-			res.status(400).json({ message: 'Username already taken!' });
+			res.status(400).json({ message: 'Ese nombre de usuario ya esta ocupado!' });
 		}
 	} catch (error) {
 		console.error(error);
@@ -57,9 +57,9 @@ app.put('/changeProfile', async (req, res) => {
 		console.log(r ? 'Profile updated!' : 'Unable to edit profile.');
 		if (r) {
 			let x = await ProfileServices.getUser(req.body);
-			res.status(200).json({ message: 'Done!', data: x });
+			res.status(200).json({ message: 'Hecho!', data: x });
 		} else {
-			res.status(400).json({ message: 'Unable to edit profile.' });
+			res.status(400).json({ message: 'No se pudo editar el perfil.' });
 		}
 	} catch (error) {
 		console.error(error);
@@ -75,9 +75,9 @@ app.get('/getUserInfo', async (req, res) => {
 		let r = await ProfileServices.getUser(req.body);
 		console.log(r ? 'Info sent!' : 'Unable to send info.');
 		if (r) {
-			res.status(200).json({ message: 'Done!', data: r });
+			res.status(200).json({ message: 'Hecho!', data: r });
 		} else {
-			res.status(400).json({ message: 'Unable to edit profile.' });
+			res.status(400).json({ message: 'No se pudo obtener la informacion del usuario.' });
 		}
 	} catch(e) {
 		console.log(e);
