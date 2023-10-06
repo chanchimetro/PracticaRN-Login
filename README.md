@@ -56,7 +56,7 @@
 <!-- ABOUT THE PROJECT -->
 ## Sobre el proyecto
 
-[![LoginRN Screen Shot][product-screenshot]]
+![LoginRN Screen Shot][product-screenshot]
 
 Este es un proyecto que provee un simple servicio de Login y Registro, ademas de un sistema de usuarios editables.
 
@@ -120,7 +120,7 @@ This is an example of how to list things you need to use the software and how to
 
 <!-- USAGE EXAMPLES -->
 ## Uso
-[![LoginRN Screen Shot][product-screenshot]]
+![LoginRN Screen Shot][product-screenshot]
 
 <p align="right">(<a href="#readme-top">volver al inicio</a>)</p>
 
