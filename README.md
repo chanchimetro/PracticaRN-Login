@@ -7,7 +7,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/chanchimetro/PracticaRN-Login/tree/main">
-    <img src="images/logo.png" alt="Logo" width="80" height="80">
+    <img src="https://ps.w.org/login-customizer/assets/icon-256x256.png?rev=2455454" alt="Logo" width="80" height="80">
   </a>
 
 <h3 align="center">PracticaRN-Login</h3>
@@ -56,7 +56,7 @@
 <!-- ABOUT THE PROJECT -->
 ## Sobre el proyecto
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+[![LoginRN Screen Shot][product-screenshot]]
 
 Este es un proyecto que provee un simple servicio de Login y Registro, ademas de un sistema de usuarios editables.
 
@@ -120,10 +120,7 @@ This is an example of how to list things you need to use the software and how to
 
 <!-- USAGE EXAMPLES -->
 ## Uso
-
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
-
-_For more examples, please refer to the [Documentation](https://example.com)_
+[![LoginRN Screen Shot][product-screenshot]]
 
 <p align="right">(<a href="#readme-top">volver al inicio</a>)</p>
 
@@ -156,7 +153,7 @@ Link del proyecto: [https://github.com/chanchimetro/PracticaRN-Login/tree/main](
 [license-url]: https://github.com/https://github.com/chanchimetro/PracticaRN-Login/tree/main/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/linkedin_username
-[product-screenshot]: images/screenshot.png
+[product-screenshot]: assets/screenShowcase.png
 [React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
 [React-url]: https://reactjs.org/
 [ReactNative.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
