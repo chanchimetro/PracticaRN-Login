@@ -2,20 +2,11 @@
 
 
 
-<!-- PROJECT SHIELDS -->
-[![Contributors][contributors-shield]][contributors-url]
-[![Forks][forks-shield]][forks-url]
-[![Stargazers][stars-shield]][stars-url]
-[![Issues][issues-shield]][issues-url]
-[![MIT License][license-shield]][license-url]
-[![LinkedIn][linkedin-shield]][linkedin-url]
-
-
 
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/https://github.com/chanchimetro/PracticaRN-Login/tree/main">
+  <a href="https://github.com/chanchimetro/PracticaRN-Login/tree/main">
     <img src="images/logo.png" alt="Logo" width="80" height="80">
   </a>
 
@@ -29,9 +20,9 @@
     <br />
     <a href="T">View Demo</a>
     ·
-    <a href="https://github.com/https://github.com/chanchimetro/PracticaRN-Login/tree/main/issues">Report Bug</a>
+    <a href="https://github.com/chanchimetro/PracticaRN-Login/tree/main/issues">Report Bug</a>
     ·
-    <a href="https://github.com/https://github.com/chanchimetro/PracticaRN-Login/tree/main/issues">Request Feature</a>
+    <a href="https://github.com/chanchimetro/PracticaRN-Login/tree/main/issues">Request Feature</a>
   </p>
 </div>
 
@@ -57,7 +48,6 @@
     <li><a href="#usage">Uso</a></li>
     <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#contact">Contacto</a></li>
-    <li><a href="#acknowledgments">Acknowledgments</a></li>
   </ol>
 </details>
 
@@ -154,7 +144,7 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 
 Ignacio - chanchimetro@gmail.com
 
-Project Link: [/https://github.com/chanchimetro/PracticaRN-Login/tree/main](https://github.com/chanchimetro/PracticaRN-Login/tree/main)
+Project Link: [https://github.com/chanchimetro/PracticaRN-Login/tree/main](https://github.com/chanchimetro/PracticaRN-Login/tree/main)
 
 <p align="right">(<a href="#readme-top">volver al inicio</a>)</p>
 
