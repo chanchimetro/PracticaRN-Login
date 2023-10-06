@@ -133,6 +133,7 @@ This is an example of how to list things you need to use the software and how to
 - [X] Registro
 - [X] Perfil
     - [X] Edición de perfil
+    - [X] Visualización de perfil
 
 <p align="right">(<a href="#readme-top">volver al inicio</a>)</p>
 
