@@ -66,7 +66,7 @@ Este es un proyecto que provee un simple servicio de Login y Registro, ademas de
 
 ### Construido con
 
-* [![React][React.js]][React-url]
+* ![Static Badge](https://img.shields.io/badge/React-black?style=for-the-badge&logo=react)
 * ![Static Badge](https://img.shields.io/badge/React%20Native-black?style=for-the-badge&logo=react)
 * ![Static Badge](https://img.shields.io/badge/Expo-black?style=for-the-badge&logo=expo)
 * ![Static Badge](https://img.shields.io/badge/Axios-black?style=for-the-badge&logo=axios)
