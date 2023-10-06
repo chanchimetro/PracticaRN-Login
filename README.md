@@ -92,17 +92,16 @@ Este es un proyecto que provee un simple servicio de Login y Registro, ademas de
 ### Construido con
 
 * [![React][React.js]][React-url]
-* [![React Native][ReactNative.js]][ReactNative-url]
+* ![Static Badge](https://img.shields.io/badge/React%20Native-black?style=for-the-badge&logo=react)
+* ![Static Badge](https://img.shields.io/badge/Expo-black?style=for-the-badge&logo=expo)
+* ![Static Badge](https://img.shields.io/badge/Axios-black?style=for-the-badge&logo=axios)
 
 <p align="right">(<a href="#readme-top">volver al inicio</a>)</p>
 
 
 
 <!-- GETTING STARTED -->
-## Getting Started
-
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
+## Setup
 
 ### Prerequisitos
 
@@ -145,7 +144,7 @@ This is an example of how to list things you need to use the software and how to
 
 
 <!-- USAGE EXAMPLES -->
-## Usage
+## Uso
 
 Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
 
@@ -163,31 +162,16 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 - [X] Perfil
     - [X] Edición de perfil
 
-See the [open issues](https://github.com/https://github.com/chanchimetro/PracticaRN-Login/tree/main/issues) for a full list of proposed features (and known issues).
-
 <p align="right">(<a href="#readme-top">volver al inicio</a>)</p>
 
 <!-- CONTACT -->
-## Contact
+## Contacto
 
-Your Name - [@twitter_handle](https://twitter.com/twitter_handle) - email@email_client.com
+Ignacio - chanchimetro@gmail.com
 
 Project Link: [https://github.com/https://github.com/chanchimetro/PracticaRN-Login/tree/main](https://github.com/https://github.com/chanchimetro/PracticaRN-Login/tree/main)
 
 <p align="right">(<a href="#readme-top">volver al inicio</a>)</p>
-
-
-
-<!-- ACKNOWLEDGMENTS -->
-## Acknowledgments
-
-* []()
-* []()
-* []()
-
-<p align="right">(<a href="#readme-top">volver al inicio</a>)</p>
-
-
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
@@ -208,24 +192,3 @@ Project Link: [https://github.com/https://github.com/chanchimetro/PracticaRN-Log
 [React-url]: https://reactjs.org/
 [ReactNative.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
 [ReactNative-url]: https://reactnative.dev/
-
-
-# PracticaRN-Login
-
-### Setup
-1. Clonar el repositorio
-2. Abrir en dos ventanas de consola distintas el **Server** (`..\PracticaRN-Login\Server`) y el **Cliente** (`..\PracticaRN-Login\Client`)
-3. Ejecutar `npm i` en las dos ventanas
-4. Crear una base de datos titulada `loginRN`
-5. Ejecutar la Query de SQL `..\PracticaRN-Login\Server\DBsetup.sql` en Microsoft SQL Server Management Studio
-6. Ejecutar la Query de SQL `..\PracticaRN-Login\Server\DBuserQuery.sql` en Microsoft SQL Server Management Studio
-7. Crear un archivo `.env` en `..\PracticaRN-Login\Server\` con el siguiente formato:
-   ```
-   DB_USER = "user"
-   DB_PASSWORD = "user"
-   DB_SERVER = [ServerName]
-   DB_DATABASE = "loginRN"
-   ```
-8. Ejecutar el server (`..\PracticaRN-Login\Server`) con `npm run start`
-9. Ejecutar el cliente (`..\PracticaRN-Login\Client`) con `expo start`
-10. Listo!
