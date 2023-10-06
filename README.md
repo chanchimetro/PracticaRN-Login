@@ -148,12 +148,6 @@ Link del proyecto: [https://github.com/chanchimetro/PracticaRN-Login/tree/main](
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[issues-shield]: https://img.shields.io/github/issues/https://github.com/chanchimetro/PracticaRN-Login/tree/main.svg?style=for-the-badge
-[issues-url]: https://github.com/chanchimetro/PracticaRN-Login/tree/main/issues
-[license-shield]: https://img.shields.io/github/license/https://github.com/chanchimetro/PracticaRN-Login/tree/main.svg?style=for-the-badge
-[license-url]: https://github.com/https://github.com/chanchimetro/PracticaRN-Login/tree/main/blob/master/LICENSE.txt
-[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
-[linkedin-url]: https://linkedin.com/in/linkedin_username
 [product-screenshot]: assets/screenShowcase.png
 [React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
 [React-url]: https://reactjs.org/
