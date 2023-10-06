@@ -144,7 +144,7 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 
 Ignacio - chanchimetro@gmail.com
 
-Project Link: [https://github.com/chanchimetro/PracticaRN-Login/tree/main](https://github.com/chanchimetro/PracticaRN-Login/tree/main)
+Link del proyecto: [https://github.com/chanchimetro/PracticaRN-Login/tree/main](https://github.com/chanchimetro/PracticaRN-Login/tree/main)
 
 <p align="right">(<a href="#readme-top">volver al inicio</a>)</p>
 
