@@ -15,14 +15,6 @@
   <p align="center">
     Este es un servicio de Login y Registro, armado en React Native 
     <br />
-    <a href="https://github.com/chanchimetro/PracticaRN-Login"><strong>Explore the docs »</strong></a>
-    <br />
-    <br />
-    <a href="T">View Demo</a>
-    ·
-    <a href="https://github.com/chanchimetro/PracticaRN-Login/tree/main/issues">Report Bug</a>
-    ·
-    <a href="https://github.com/chanchimetro/PracticaRN-Login/tree/main/issues">Request Feature</a>
   </p>
 </div>
 
