@@ -1,16 +1,22 @@
 import { StatusBar } from 'expo-status-bar';
 import { useState } from 'react';
-import { Text, View, SafeAreaView, TextInput, Button } from 'react-native';
+import { Text, View, SafeAreaView, TextInput, Button, Alert } from 'react-native';
 import Separator from '../Separator';
 import styles from '../stylesheet.js';
 import authServices from '../scripts.js';
 
+const handleRegister = (msg) => {
+  Alert.alert(msg.text1, msg.text2, [
+    {text: 'OK', onPress: () => console.log('OK Pressed')},
+  ]);
+}
+
 export default function RegisterScreen({ navigation }) {
-    const [email, onChangeEmailText] = useState("");
-    const [pass, onChangePassText] = useState("");
-    const [name, onChangeNameText] = useState("");
-    const [alertText, setAlertText] = useState([""]);
+    const [email, setEmail] = useState("");
+    const [pass, setPass] = useState("");
+    const [name, setName] = useState("");
   
+
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.centeredCont}>
@@ -22,25 +28,25 @@ export default function RegisterScreen({ navigation }) {
           <TextInput
             style={styles.input}
             placeholder='Email'
-            onChangeText={onChangeEmailText}
+            onChangeText={setEmail}
             value={email}
           />
           <TextInput
             style={styles.input}
             placeholder='Password'
-            onChangeText={onChangePassText}
+            onChangeText={setPass}
             value={pass}
           />
           <TextInput
             style={styles.input}
             placeholder='Name'
-            onChangeText={onChangeNameText}
-            value={pass}
+            onChangeText={setName}
+            value={name}
           />
           <Button
             style={styles.button}
             title="Register"
-            onPress={async () => setAlertText(await authServices.register(userText, passText))}
+            onPress={async () => handleRegister(await authServices.register(email, name, pass))}
           />
           <Text
             style={styles.link}
@@ -49,7 +55,7 @@ export default function RegisterScreen({ navigation }) {
             Ya tengo cuenta
           </Text>
           <Separator />
-          <Text>{alertText}</Text>
+          <Text>ok</Text>
           <StatusBar style="auto" />
         </View>
       </SafeAreaView>

@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { doc, setDoc, getFirestore } from "firebase/firestore" 
+import {app} from "./firebaseConfig";
 
 let url = "http://localhost:3001/"
 
@@ -24,10 +25,10 @@ export default class authServices {
     return r;
   }
 
-  static register = async (email, pass) => {
+  static register = async (email, name, pass) => {
     let r;
     try {
-      const auth = getAuth();
+      const auth = getAuth(app);
       const { user } = await createUserWithEmailAndPassword(
         auth,
         email,
