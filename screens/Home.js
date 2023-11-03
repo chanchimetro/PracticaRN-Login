@@ -5,42 +5,32 @@ import { userContext } from '../contexts/userContext.js';
 import { dbContext } from '../contexts/dbContext.js';
 import Separator from '../Separator.js';
 import styles from '../stylesheet.js';
+import authServices from '../scripts.js';
 
-const handleLogout = (userContext, navigation) => {
-  userContext.setUser({});
-  navigation.navigate('Menu');
+const handleLogout = async (user, navigation) => {
+  user.setUser({});
+  await authServices.logout()
+    .then(
+      navigation.navigate('Menu')
+    );
 }
 
 export default function HomeScreen({ navigation }) {
   const [isLoading, setIsLoading] = useState(true);
-  const [profile, setProfile] = useState(true);
-  const [completeProfile, setCompleteProfile] = useState(true);
+  const [profile, setProfile] = useState([]);
+  const [completeProfile, setCompleteProfile] = useState(false);
   const user = useContext(userContext);
   const db = useContext(dbContext);
 
-  const perfilRef = collection(db, "perfil")
-  const q = query(perfilRef, where("user_uid", "==", user.uid));
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const querySnapshot = await getDocs(q);
-        const data = [];
-        querySnapshot.forEach((doc) => {
-          data.push(doc.data());
-        });
-        console.log("data[0]:")
-        console.log(data[0])
-        setProfile(data[0])
-        if (data.length > 0) setHasProfile(true)
-      } catch (error) {
-        console.error(error)
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchData();
+    const func = async () => {
+      let r = await authServices.fetchData(db, user.user.uid);
+      setProfile(r[0]);
+      if (r.length > 0) setCompleteProfile(true);
+      setIsLoading(false);
+    }
+    func();
   }, []);
 
   return (
@@ -56,7 +46,7 @@ export default function HomeScreen({ navigation }) {
                   <Text
                     style={styles.title}
                   >
-                    Bienvenido! {userContext.user.name} {userContext.user.surname}!
+                    Bienvenido! {profile.name} {profile.surname}!
                   </Text>
                 </View>
                 <Separator />
@@ -88,7 +78,7 @@ export default function HomeScreen({ navigation }) {
             <Button
               style={styles.button}
               title="Cerrar Sesion"
-              onPress={() => handleLogout(userContext, navigation)}
+              onPress={() => handleLogout(user, navigation)}
             ></Button>
           </>
         }

@@ -1,9 +1,8 @@
 import axios from 'axios';
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
-import { doc, setDoc, getFirestore } from "firebase/firestore"
+import { doc, setDoc, getFirestore, getDocs, collection, query, where } from "firebase/firestore"
 import { app } from "./firebaseConfig";
 
-let url = "http://localhost:3001/"
 const auth = getAuth(app);
 
 export default class authServices {
@@ -16,6 +15,7 @@ export default class authServices {
         pass
       );
       context.setUser(user);
+      console.log(user);
       r = {
         type: "success",
         text1: "Inicio de sesion exitoso",
@@ -32,22 +32,36 @@ export default class authServices {
     return r;
   };
 
+  static logout = async () => {
+    auth.signOut();
+  };
+
+  static fetchData = async (db, userUid) => {
+    const perfilRef = collection(db, "users")
+    const q = query(perfilRef, where("uid", "==", userUid));
+    const data = [];
+    try {
+      const querySnapshot = await getDocs(q);
+      querySnapshot.forEach((doc) => {
+        data.push(doc.data());
+      });
+      console.log("data");
+      console.log(data);
+      console.log(data[0]);
+    } catch (error) {
+      console.error(error);
+    }
+    return data;
+  };
+
   static register = async (email, pass) => {
     let r;
-    let name = "";
     try {
       const { user } = await createUserWithEmailAndPassword(
         auth,
         email,
         pass
       );
-      const { uid } = user;
-      const db = getFirestore();
-      await setDoc(doc(db, "users", uid), {
-        name,
-        email,
-        uid,
-      });
       r = {
         type: "success",
         text1: "Registro exitoso",
@@ -64,24 +78,30 @@ export default class authServices {
     return r;
   };
 
-  static editProfile = async (name, surname, email, context, navigation) => {
+  static editProfile = async (username, name, surname, email, uid) => {
     let r;
-    await axios.put('http://localhost:3001/changeProfile', {
-      username: context.user.username,
-      name: name,
-      surname: surname,
-      email: email
-    })
-      .then(function (response) {
-        console.log(response.data);
-        context.setUser(response.data.data);
-        r = response.data.message;
-        setTimeout(() => navigation.navigate('Home'), 2000);
-      })
-      .catch(function (error) {
-        r = error.response.data.message;
-        console.log(error);
+    try {
+      const db = getFirestore();
+      await setDoc(doc(db, "users", uid), {
+        username,
+        name,
+        surname,
+        email,
+        uid,
       });
+      r = ({
+        type: "success",
+        text1: "Edicion exitosa",
+        text2: "El perfil ha sido editado correctamente.",
+      });
+    } catch (error) {
+      console.log(error);
+      r = ({
+        type: "error",
+        text1: "Error",
+        text2: "Ha ocurrido un error al editar el perfil.",
+      });
+    }
     return r;
   }
 }
