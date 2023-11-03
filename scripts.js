@@ -1,34 +1,41 @@
 import axios from 'axios';
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-import { doc, setDoc, getFirestore } from "firebase/firestore" 
-import {app} from "./firebaseConfig";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import { doc, setDoc, getFirestore } from "firebase/firestore"
+import { app } from "./firebaseConfig";
 
 let url = "http://localhost:3001/"
+const auth = getAuth(app);
 
 export default class authServices {
-  static login = async (user, pass, context, navigation) => {
-    let r;
-    await axios.post(url + 'login', {
-      user: user,
-      pass: pass
-    })
-      .then(function (response) {
-        console.log(response);
-        context.setUser(response.data.data);
-        r = response.data.message;
-        setTimeout(() => navigation.navigate('Home'), 3000);
-      })
-      .catch(function (error) {
-        r = error.response.data.message;
-        console.log(error);
-      });
-    return r;
-  }
-
-  static register = async (email, name, pass) => {
+  static login = async (email, pass, context) => {
     let r;
     try {
-      const auth = getAuth(app);
+      const { user } = await signInWithEmailAndPassword(
+        auth,
+        email,
+        pass
+      );
+      context.setUser(user);
+      r = {
+        type: "success",
+        text1: "Inicio de sesion exitoso",
+        text2: "La sesion a iniciado correctamente.",
+      };
+    } catch (error) {
+      console.log(error);
+      r = {
+        type: "error",
+        text1: "Error",
+        text2: "Ha ocurrido un error al iniciar sesion.",
+      };
+    }
+    return r;
+  };
+
+  static register = async (email, pass) => {
+    let r;
+    let name = "";
+    try {
       const { user } = await createUserWithEmailAndPassword(
         auth,
         email,
@@ -41,7 +48,7 @@ export default class authServices {
         email,
         uid,
       });
-      r  = {
+      r = {
         type: "success",
         text1: "Registro exitoso",
         text2: "El usuario ha sido creado correctamente.",
@@ -56,26 +63,6 @@ export default class authServices {
     }
     return r;
   };
-
-  /*
-  static register = async (user, pass, navigation) => {
-    let r;
-    await axios.post('http://localhost:3001/register', {
-      user: user,
-      pass: pass
-    })
-      .then(function (response) {
-        console.log(response);
-        r = response.data.message;
-        setTimeout(() => navigation.navigate('Menu'), 3000);
-      })
-      .catch(function (error) {
-        r = error.response.data.message;
-        console.log(error);
-      });
-    return r;
-  }
-  */
 
   static editProfile = async (name, surname, email, context, navigation) => {
     let r;

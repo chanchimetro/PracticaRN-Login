@@ -5,18 +5,16 @@ import Separator from '../Separator';
 import styles from '../stylesheet.js';
 import authServices from '../scripts.js';
 
-const handleRegister = (msg) => {
-  Alert.alert(msg.text1, msg.text2, [
-    {text: 'OK', onPress: () => console.log('OK Pressed')},
-  ]);
+const handleRegister = (msg, navigation) => {
+  //El componente Alert de React Native no funciona en web. Por eso utilizo alert(), ya que funciona en todas las plataformas. :)
+  alert(msg.text1);
+  if (msg.type == "success") setTimeout(() => navigation.navigate('Menu'), 3000);
 }
 
 export default function RegisterScreen({ navigation }) {
     const [email, setEmail] = useState("");
     const [pass, setPass] = useState("");
-    const [name, setName] = useState("");
   
-
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.centeredCont}>
@@ -37,16 +35,10 @@ export default function RegisterScreen({ navigation }) {
             onChangeText={setPass}
             value={pass}
           />
-          <TextInput
-            style={styles.input}
-            placeholder='Name'
-            onChangeText={setName}
-            value={name}
-          />
           <Button
             style={styles.button}
             title="Register"
-            onPress={async () => handleRegister(await authServices.register(email, name, pass))}
+            onPress={async () => handleRegister(await authServices.register(email, pass), navigation)}
           />
           <Text
             style={styles.link}
