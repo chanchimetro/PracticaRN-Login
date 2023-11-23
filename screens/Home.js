@@ -5,7 +5,7 @@ import { userContext } from '../contexts/userContext.js';
 import { dbContext } from '../contexts/dbContext.js';
 import Separator from '../Separator.js';
 import styles from '../stylesheet.js';
-import authServices from '../scripts.js';
+import { authServices } from '../scripts.js';
 
 const handleLogout = async (user, navigation) => {
   user.setUser({});
@@ -46,14 +46,19 @@ export default function HomeScreen({ navigation }) {
                   <Text
                     style={styles.title}
                   >
-                    Bienvenido! {profile.name} {profile.surname}!
+                    Bienvenido a ThinkTank! {profile.name} {profile.surname}!
                   </Text>
                 </View>
-                <Separator />
                 <Button
                   style={styles.button}
                   title="Edita tu perfil"
                   onPress={() => navigation.navigate('Profile')}
+                ></Button>
+                <Separator />
+                <Button
+                  style={styles.button}
+                  title="Feed"
+                  onPress={() => navigation.navigate('Feed')}
                 ></Button>
               </> :
               <>
@@ -63,7 +68,7 @@ export default function HomeScreen({ navigation }) {
                   <Text
                     style={styles.title}
                   >
-                    Bienvenido!
+                    Bienvenido a ThinkTank!
                   </Text>
                 </View>
                 <Separator />

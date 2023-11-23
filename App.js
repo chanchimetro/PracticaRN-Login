@@ -9,6 +9,7 @@ import ProfileScreen from './screens/Profile.js';
 import MenuScreen from './screens/Menu.js';
 import LoginScreen from './screens/Login.js';
 import RegisterScreen from './screens/Register.js';
+import FeedScreen from './screens/Feed.js';
 import { app } from './firebaseConfig.js';
 
 const Stack = createNativeStackNavigator();
@@ -27,6 +28,7 @@ export default function App() {
             <Stack.Screen name="Profile" component={ProfileScreen} />
             <Stack.Screen name="Register" component={RegisterScreen} />
             <Stack.Screen name="Home" component={HomeScreen} />
+            <Stack.Screen name="Feed" component={FeedScreen} />
           </Stack.Navigator>
         </NavigationContainer>
       </dbContext.Provider>

@@ -1,11 +1,11 @@
 import axios from 'axios';
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
-import { doc, setDoc, getFirestore, getDocs, collection, query, where } from "firebase/firestore"
+import { doc, setDoc, getFirestore, getDocs, collection, query, where, addDoc } from "firebase/firestore"
 import { app } from "./firebaseConfig";
 
 const auth = getAuth(app);
 
-export default class authServices {
+class authServices {
   static login = async (email, pass, context) => {
     let r;
     try {
@@ -45,9 +45,6 @@ export default class authServices {
       querySnapshot.forEach((doc) => {
         data.push(doc.data());
       });
-      console.log("data");
-      console.log(data);
-      console.log(data[0]);
     } catch (error) {
       console.error(error);
     }
@@ -104,4 +101,48 @@ export default class authServices {
     }
     return r;
   }
+}
+
+class thoughtServices {
+  static fetchThoughts = async (db) => {
+    const thoughtsRef = collection(db, "thoughts")
+    const q = query(thoughtsRef);
+    const data = [];
+    try {
+      const querySnapshot = await getDocs(q);
+      querySnapshot.forEach((doc) => {
+        data.push(doc.data());
+      });
+    } catch (error) {
+      console.error(error);
+    }
+    return data;
+  };
+  static postThought = async (post) => {
+    let r;
+    try {
+      const db = getFirestore();
+      await addDoc(collection(db, "thoughts"), {
+        post
+      });
+      r = ({
+        type: "success",
+        text1: "Pensamiento compartido",
+        text2: "",
+      });
+    } catch (error) {
+      console.log(error);
+      r = ({
+        type: "error",
+        text1: "Error",
+        text2: "",
+      });
+    }
+    return r;
+  };
+}
+
+export {
+  authServices,
+  thoughtServices
 }

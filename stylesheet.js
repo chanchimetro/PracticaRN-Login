@@ -26,6 +26,11 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         padding: 10,
     },
+    thought: {
+        marginBottom: 6,
+        borderWidth: 1,
+        padding: 10,
+    },
     separator: {
         marginVertical: 10,
         borderBottomColor: '#737373',

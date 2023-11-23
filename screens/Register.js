@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { Text, View, SafeAreaView, TextInput, Button, Alert } from 'react-native';
 import Separator from '../Separator';
 import styles from '../stylesheet.js';
-import authServices from '../scripts.js';
+import { authServices } from '../scripts.js';
 
 const handleRegister = (msg, navigation) => {
   //El componente Alert de React Native no funciona en web. Por eso utilizo alert(), ya que funciona en todas las plataformas. :)
@@ -47,7 +47,6 @@ export default function RegisterScreen({ navigation }) {
             Ya tengo cuenta
           </Text>
           <Separator />
-          <Text>ok</Text>
           <StatusBar style="auto" />
         </View>
       </SafeAreaView>

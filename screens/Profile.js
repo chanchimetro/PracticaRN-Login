@@ -5,7 +5,7 @@ import { userContext } from '../contexts/userContext';
 import { dbContext } from '../contexts/dbContext';
 import Separator from '../Separator';
 import styles from '../stylesheet.js';
-import authServices from '../scripts.js';
+import { authServices } from '../scripts.js';
 
 const handleEditProfile = (msg, navigation) => {
 	//El componente Alert de React Native no funciona en web. Por eso utilizo alert(), ya que funciona en todas las plataformas. :)
@@ -75,7 +75,6 @@ export default function ProfileScreen({ navigation }) {
 							title="Confirmar"
 							onPress={async () => handleEditProfile(await authServices.editProfile(username, name, surname, email, user.user.uid), navigation)}
 						/>
-						<Text>ok</Text>
 					</>
 					}
 			</View>
