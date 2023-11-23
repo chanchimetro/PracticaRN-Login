@@ -118,12 +118,13 @@ class thoughtServices {
     }
     return data;
   };
-  static postThought = async (post) => {
+  static postThought = async (post, email) => {
     let r;
     try {
       const db = getFirestore();
       await addDoc(collection(db, "thoughts"), {
-        post
+        post,
+        email
       });
       r = ({
         type: "success",

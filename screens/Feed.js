@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { View, SafeAreaView, Button, TextInput } from 'react-native';
+import { View, SafeAreaView, Button, TextInput, Text } from 'react-native';
 import { userContext } from '../contexts/userContext.js';
 import { dbContext } from '../contexts/dbContext.js';
 import { thoughtServices } from '../scripts.js';
@@ -45,14 +45,19 @@ export default function FeedScreen({ navigation }) {
 				<Button
 					style={styles.button}
 					title="Post"
-					onPress={async () => handlePost(await thoughtServices.postThought(post), navigation)}
+					onPress={async () => handlePost(await thoughtServices.postThought(post, user.user.email), navigation)}
 				/>
 				<Separator />
+				<Text styles={styles.bold}>
+					En que esta pensando la gente?
+				</Text>
 				{
 					thoughts.length > 0 ?
 						thoughts.map((t) => (
 							<View
 								style={styles.thought}>
+								<Text><View style={styles.bold}>E-Mail: </View>{t.email}</Text>
+								<Separator />
 								{t.post}
 							</View>
 						))

@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
         padding: 10,
     },
     thought: {
-        marginBottom: 6,
+        marginTop: 6,
         borderWidth: 1,
         padding: 10,
     },
