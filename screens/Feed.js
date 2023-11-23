@@ -56,7 +56,7 @@ export default function FeedScreen({ navigation }) {
 						thoughts.map((t) => (
 							<View
 								style={styles.thought}>
-								<Text><View style={styles.bold}>E-Mail: </View>{t.email}</Text>
+								<Text style={styles.bold}>{t.email}</Text>
 								<Separator />
 								{t.post}
 							</View>
